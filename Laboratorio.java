@@ -1,3 +1,10 @@
+/**
+ * Universidad del Valle de Guatemala
+ * Programación orientada a objetos
+ * @author Juan Ignacio Figueroa, 23092
+ * @fechaCreación: 17/09/23
+ * @fechaModificación: 24/09/23
+ */
 import java.util.ArrayList;
 public class Laboratorio {
     private int capmax;
@@ -33,6 +40,23 @@ public class Laboratorio {
         return horarios;
     }
 
+    /**
+     * @param horarios
+     * @param hora
+     * @param dia
+     * @return
+     */
+    public ArrayList<ArrayList<Curso>> eliminarCurso(ArrayList<ArrayList<Curso>> horarios, int hora, int dia){
+        horarios.get(hora).set(dia,new Curso("[    ]",new Profesor("")));
+        return horarios;
+    }
+
+
+    /**
+     * @param dia
+     * @param indexdia
+     * @return
+     */
     public int asignarDia(String dia,int indexdia){
         switch (dia) {
             case "lun":
@@ -56,6 +80,15 @@ public class Laboratorio {
         return indexdia;
     }
 
+    
+    /**
+     * @param horarios
+     * @param hora
+     * @param dia
+     * @param periodos
+     * @param alum
+     * @return
+     */
     public boolean chequearDisponibilidad(ArrayList<ArrayList<Curso>> horarios,int hora, int dia, int periodos, int alum){
         boolean check = true;
         if(alum>20){check=false;}
@@ -64,5 +97,54 @@ public class Laboratorio {
         }
         return(check);
     }
-    
+
+    /**
+     * @param horarios
+     * @param nomprof
+     * @param dsemana
+     */
+    public void mostrarCursosProfesor(ArrayList<ArrayList<Curso>> horarios, String nomprof, String[] dsemana){
+        ArrayList<Curso> cursosprof = new ArrayList<>();
+        ArrayList<Integer> diasprof = new ArrayList<>();
+
+        for(ArrayList<Curso> fila:horarios){
+            int indexdia=0;
+            for(Curso cursox: fila){
+                if(nomprof.equals(cursox.getProfesor()) && cursosprof.contains(cursox)==false){
+                    cursosprof.add(cursox);
+                }
+                if(nomprof.equals(cursox.getProfesor()) && diasprof.contains(indexdia)==false){
+                    diasprof.add(indexdia);
+                }
+                indexdia++;
+            }
+        }
+        System.out.println("\nDías en que el profesor está al frente del laboratorio:");
+        for(int dia: diasprof){
+            System.out.println(dsemana[dia]);
+        }
+        System.out.println("\nCursos que el profesor reparte en la semana:");
+        for(Curso cursox: cursosprof){
+            System.out.println(cursox.getCode()+" "+cursox.getNom()+": "+cursox.getPeriodos()+" períodos a la semana");
+        }
+    }
+
+
+    /**
+     * @param horarios
+     * @param nomprof
+     * @param totalperiodos
+     */
+    public void mostrarResponsabilidad(ArrayList<ArrayList<Curso>> horarios, String nomprof, int totalperiodos){
+        int periodosresp=0;
+        for(ArrayList<Curso> fila:horarios){
+            for(Curso cursox: fila){
+                if(nomprof.equals(cursox.getProfesor())){
+                    periodosresp++;
+                }
+            }
+        }
+        System.out.printf("\nEl profesor está al frente del laboratorio %d veces",periodosresp);
+        System.out.println("\nPorcentaje de responsabilidad = "+(periodosresp/totalperiodos)*100+ "%");
+    }
 }

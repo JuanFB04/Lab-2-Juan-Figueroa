@@ -1,3 +1,10 @@
+/**
+ * Universidad del Valle de Guatemala
+ * Programación orientada a objetos
+ * @author Juan Ignacio Figueroa, 23092
+ * @fechaCreación: 17/09/23
+ * @fechaModificación: 24/09/23
+ */
 public class Curso {
     private String code;
     private String nom;
@@ -12,8 +19,9 @@ public class Curso {
         this.alum=alum;
         this.profesor=profesor;
     }
-    public Curso(String rotulador){
+    public Curso(String rotulador, Profesor profesor){
         this.code=rotulador;
+        this.profesor=profesor;
     }
 
     public String getCode(){return code;}
